@@ -2,8 +2,11 @@
 var doc = document;
 // apprivations
 var undef = "undefined";
+// constants
+var OO = 1e9;
 
 var jm = {};
+jm.sort = {};
 
 // get all elements
 jm.getAll = function()
@@ -92,3 +95,147 @@ jm.childs = function(element)
 	}
 	return matched;
 }
+
+// cross browser log method
+jm.log = function (msg) {
+    console.log(msg);
+}
+
+jm.sortAsc = function (values) {
+    values.sort(jm.compareAsc);
+    return values;
+}
+
+jm.sortDesc = function (values) {
+    values.sort(jm.compareDesc);
+    return values;
+}
+
+jm.compareAsc = function (a, b) {
+    if (typeof a === "string") {
+        if (a < b) {
+            return -1;
+        }
+        if (a > b) {
+            return 1;
+        }
+        return 0;
+    } else {
+        return a - b;
+    }
+}
+
+jm.compareDesc = function (a, b) {
+    if (typeof a === "string") {
+        if (a > b) {
+            return -1;
+        }
+        if (a < b) {
+            return 1;
+        }
+        return 0;
+    } else {
+        return b - a;
+    }
+}
+
+// check on property
+jm.has = function (obj, property) {
+	return obj.hasOwnProperty(property);
+}
+
+// make obj inherit all props from src
+/*
+	// TODO
+*/
+jm.create = function (obj1,obj2) {
+	obj1.c = function (obj2) {
+		var p = function () {};
+		p.prototype = obj2;
+		return new p();
+	}
+}
+
+jm.write = function (txt) {
+	doc.writeln(txt);
+}
+
+jm.toInt = function (num, base) {
+	return parseInt(num,base || 10);
+}
+
+jm.isNumber = function (num) {
+	return typeof num === 'number' && isFinite(num);
+}
+// insertion sort 
+/*jm.sort.insertion = function(array)
+{
+	var len = array.length,
+		i,
+		j,
+		key;
+
+	for (i = 1; i < len; ++i) {
+		
+		key = array[i];
+		j = i-1;
+		
+		while(key < array[j] ) {
+			array[j+1] = array[j];
+			--j;
+		}
+		array[j+1] = key;
+	}
+	return array;
+}
+
+// merge sort
+jm.sort.merge = function(array, p, r)
+{
+    if(p < r) {
+		var q = Math.ceil((p + r)/2);
+        alert(p + " " + q);
+		jm.sort.merge(array,p,q);
+		jm.sort.merge(array,q+1,r);
+        jm.sort.mergeAuxalary(array, p, q, r);
+	}
+}*/
+
+// merge function for merge sort
+/*jm.sort.mergeAuxalary = function(array, p, q, r)
+{
+	var n1 = q-p+1,
+		n2 = r-q,
+		n = n1 + n2,
+		left = [],
+		right = [],
+		i,
+		j,
+		k;
+
+	for (i = 0; i < n1; ++i) {
+		left[left.length] = array[p+i];
+		//doc.write("left " + left[i] + "<br>");
+	}
+
+	for (j = 0; j < n2; ++j) {
+		right[right.length] = array[q+j];
+		//doc.write("right " + right[j] + "<br>");
+	}
+
+	left[n1] = right[n2] = OO;
+	
+    alert(left + " " + right);
+	
+    i=j=0;
+	for(k = p; k <= r; ++k) {
+		if(left[i] <= right[j]) {
+			array[k] = left[i];
+			doc.write(array[k] +  "<br>");
+			++i;
+		} else {
+			array[k] = right[j];
+			++j;
+		}
+	}
+}*/
